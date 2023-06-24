@@ -192,6 +192,113 @@ app.get("/test/:username/:photoId/comment", async (req, res) => {
   }
 });
 
+//Friend Request
+app.post("/test/:username/request/:reqUsername", async (req, res) => {
+  try {
+    const {
+      params: { username, reqUsername },
+    } = req;
+
+    const friendRequesterData = await UserModel.find({ username: username });
+    const friendRequestedData = await UserModel.find({ username: reqUsername });
+
+    //check if already friends by checking if there is friendRequestedId in the friends array of friendRequester
+
+    if (friendRequesterData[0].friends.includes(friendRequestedData[0]._id))
+      throw new Error("Already Friends");
+
+    // add the id of the friendrequester in the friendRequested friendsReq array
+    const updated = await UserModel.findOneAndUpdate(
+      { username: reqUsername },
+      { $addToSet: { friendsReq: friendRequesterData[0]._id } },
+      { new: true }
+    );
+
+    if (!updated) throw new Error(`${reqUsername} not found`);
+
+    res.status(200).json({
+      message: "Friend request sent",
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+});
+
+app.post("/test/:username/accept/:reqUsername", async (req, res) => {
+  try {
+    const {
+      params: { username, reqUsername },
+    } = req;
+
+    const userFriendReqList = await UserModel.find({ username: username });
+    const friendRequesterData = await UserModel.find({ username: username });
+    const friendRequestedData = await UserModel.find({ username: reqUsername });
+
+    //check if the user current friendReqlist array actually have the requester id
+    // here we can validate if there is a pending friend request
+
+    if (!userFriendReqList[0].friendsReq.includes(friendRequestedData[0]._id))
+      throw new Error("Not in friends");
+
+    // add the Id of the accepted friend in the users friends array
+    await UserModel.findOneAndUpdate(
+      { username: username },
+      {
+        $addToSet: { friends: friendRequestedData[0]._id },
+      }
+    );
+    await UserModel.findOneAndUpdate(
+      { username: reqUsername },
+      {
+        $addToSet: { friends: friendRequesterData[0]._id },
+      }
+    );
+
+    // Delete the id in the friendsReq
+    const update = await UserModel.findOneAndUpdate(
+      { username: username },
+      { $pull: { friendsReq: friendRequestedData[0]._id } },
+      { new: true }
+    );
+
+    // throw error
+    if (!update) throw new Error("There is something wrong");
+
+    res.status(200).json({
+      message: "Friend request accepted",
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+});
+
+app.get("/test/:username/friends", async (req, res) => {
+  try {
+    const {
+      params: { username },
+    } = req;
+
+    // exclude password in data return
+    const friendList = await UserModel.find({ username: username }).populate({
+      path: "friends",
+      select: "-password",
+    });
+
+    res.status(200).json({
+      message: `${username} friends List`,
+      length: friendList[0].friends.length,
+      data: [...friendList[0].friends],
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+});
 app.get("/test/ping", (req, res) => {
   res.status(201).json({
     message: "Ping",
