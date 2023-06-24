@@ -20,10 +20,18 @@ const UserSchema = new mongoose.Schema({
   cover: {
     type: String,
   },
-  friends: {
-    type: Array,
-    default: [],
-  },
+  friends: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserModel",
+    },
+  ],
+  friendsReq: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserModel",
+    },
+  ],
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
