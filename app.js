@@ -183,7 +183,7 @@ app.get("/test/:username/:photoId/comment", async (req, res) => {
 
     res.status(201).json({
       message: "success",
-      data: photoData,
+      data: photoData[0].comments,
     });
   } catch (err) {
     res.status(400).json({
