@@ -26,9 +26,13 @@ const PhotoSchema = new mongoose.Schema({
   likes: {
     type: Number,
   },
-  comments: {
-    type: String,
-  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CommentModel",
+    },
+  ],
+
   privacy: {
     type: Boolean,
   },

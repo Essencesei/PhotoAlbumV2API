@@ -24,10 +24,6 @@ const UserSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  // posts: {
-  //   type: Array,
-  //   default: [],
-  // },
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
