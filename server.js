@@ -6,7 +6,10 @@ const uri = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 
 (async () => {
   try {
-    const con = await mongoose.connect(uri);
+    const con = await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     if (!con) throw new Error();
     else console.log("Connected to MongoDB");
   } catch (err) {
