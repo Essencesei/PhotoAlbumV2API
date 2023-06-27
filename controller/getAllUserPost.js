@@ -1,4 +1,5 @@
 const UserModel = require("../model/userSchema");
+const fs = require("fs");
 
 // Get all post by user
 exports.getAllUserPost = async (req, res) => {
@@ -17,7 +18,12 @@ exports.getAllUserPost = async (req, res) => {
       sort: { date: 1 },
     });
 
-    //
+    data[0].posts.forEach((element) => {
+      element.image = {
+        contentType: "multipart/form-data",
+        image: new Buffer.from(fs.readFileSync(element.imgPath), "base64"),
+      };
+    });
 
     res.status(200).json({
       message: "success",

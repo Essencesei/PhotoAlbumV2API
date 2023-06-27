@@ -44,7 +44,7 @@ router
 
     registerNewUser
   )
-  .post("/:username/post", post)
+  .post("/:username/post", upload.single("image"), post)
   .post("/:username/:photoId/comment", comment)
   .post("/:username/request/:reqUsername", sendFriendRequest)
   .post("/:username/accept/:reqUsername", acceptFriendRequest);

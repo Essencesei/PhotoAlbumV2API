@@ -5,18 +5,17 @@ const fs = require("fs");
 // Posting of user and pushing of the postId to the UserModel's posts[]
 exports.post = async (req, res) => {
   try {
+    // const removeImage = (filename) => {
+    //   filename.forEach((element) => {
+    //     fs.unlinkSync(req.file.path);
+    //   });
+    // };
+
     // Deconstruct req
     const {
-      body: {
-        imgLink,
-        name,
-        captureDate,
-        description,
-        likes,
-        comments,
-        privacy,
-      },
+      body: { name, captureDate, description, likes, privacy },
       params: { username },
+      file: { path },
     } = req;
 
     // fetch userModel data and place in a variable
@@ -24,7 +23,7 @@ exports.post = async (req, res) => {
 
     // Create structure
     const doc = {
-      imgLink,
+      imgPath: path,
       name,
       captureDate,
       description,
@@ -37,13 +36,13 @@ exports.post = async (req, res) => {
     // Create photomodel with the doc
     await PhotoModel.create(doc);
 
-    // find the photodata with specific id
+    // // find the photodata with specific id
     const photoData = await PhotoModel.find({ uploaderId: userData[0]._id });
 
-    // push the photodata id into userdata posts array
+    // // push the photodata id into userdata posts array
     userData[0].posts.push(photoData[photoData.length - 1]._id);
 
-    //save changes
+    // //save changes
     await userData[0].save();
 
     res.status(201).json({
@@ -51,6 +50,7 @@ exports.post = async (req, res) => {
       data: doc,
     });
   } catch (err) {
+    fs.unlinkSync(req.file.path);
     res.status(400).json({
       message: err.message,
     });
