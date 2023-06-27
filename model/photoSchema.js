@@ -27,9 +27,12 @@ const PhotoSchema = new mongoose.Schema({
     ref: "UserModel",
     required: true,
   },
-  likes: {
-    type: Number,
-  },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "UserModel",
+    },
+  ],
   comments: [
     {
       type: mongoose.Schema.Types.ObjectId,
