@@ -2,8 +2,12 @@ const mongoose = require("mongoose");
 const UserModel = require("./userSchema");
 
 const PhotoSchema = new mongoose.Schema({
-  imgLink: {
+  imgPath: {
     type: String,
+  },
+  image: {
+    image: Buffer,
+    contentType: String,
   },
   name: {
     type: String,

@@ -27,6 +27,18 @@ const UserSchema = new mongoose.Schema({
     image: Buffer,
     contentType: String,
   },
+  profilePicPath: {
+    type: String,
+  },
+  coverPath: {
+    type: String,
+  },
+  // profilePic: {
+  //   type: String,
+  // },
+  // cover: {
+  //   type: String,
+  // },
   friends: [
     {
       type: mongoose.Schema.Types.ObjectId,
