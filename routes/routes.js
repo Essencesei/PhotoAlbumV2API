@@ -11,6 +11,7 @@ const { sendFriendRequest } = require("../controller/sendFriendRequest");
 const { acceptFriendRequest } = require("../controller/acceptFriendRequest");
 const { getFriendsByUser } = require("../controller/getFriendsByUser");
 const { getAllUser } = require("../controller/getAllUser");
+const { postLike } = require("../controller/postLike");
 
 const multer = require("multer");
 
@@ -47,6 +48,7 @@ router
   .post("/:username/post", upload.single("image"), post)
   .post("/:username/:photoId/comment", comment)
   .post("/:username/request/:reqUsername", sendFriendRequest)
-  .post("/:username/accept/:reqUsername", acceptFriendRequest);
+  .post("/:username/accept/:reqUsername", acceptFriendRequest)
+  .post("/:username/:photoId/like", postLike);
 
 module.exports = router;

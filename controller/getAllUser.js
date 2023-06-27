@@ -1,5 +1,4 @@
 const UserModel = require("../model/userSchema");
-const zlib = require("zlib");
 const fs = require("fs");
 
 exports.getAllUser = async (req, res) => {
@@ -12,7 +11,6 @@ exports.getAllUser = async (req, res) => {
       // function for transforming the image to buffer, using fs to determine the
       // file directory
       const bufGen = (field) => {
-        console.log(field);
         return new Buffer.from(fs.readFileSync(element[field]), "base64");
       };
 
@@ -38,5 +36,9 @@ exports.getAllUser = async (req, res) => {
       lenght: userData[0].lenght,
       data: [...userData],
     });
-  } catch (err) {}
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
 };
