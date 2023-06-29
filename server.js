@@ -17,6 +17,6 @@ const uri = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
   }
 })();
 
-app.listen(process.env.PORT, process.env.DOMAIN, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Listening on http://${process.env.DOMAIN}:${process.env.PORT}`);
 });
