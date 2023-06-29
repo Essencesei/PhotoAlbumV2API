@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const PhotoModel = require("../model/photoSchema");
 const UserModel = require("../model/userSchema");
 

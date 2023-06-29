@@ -14,12 +14,11 @@ exports.post = async (req, res) => {
     // Deconstruct req
     const {
       body: { name, captureDate, description, likes, privacy },
-      params: { username },
       file: { path },
     } = req;
 
     // fetch userModel data and place in a variable
-    const userData = await UserModel.find({ username: username });
+    const userData = await UserModel.find({ username: req.token.username });
 
     // Create structure
     const doc = {
@@ -27,7 +26,7 @@ exports.post = async (req, res) => {
       name,
       captureDate,
       description,
-      uploader: username,
+      uploader: userData[0].username,
       uploaderId: userData[0]._id,
       likes,
       privacy,
@@ -38,6 +37,8 @@ exports.post = async (req, res) => {
 
     // // find the photodata with specific id
     const photoData = await PhotoModel.find({ uploaderId: userData[0]._id });
+
+    if (photoData.length === 0) throw new Error("File not Found");
 
     // // push the photodata id into userdata posts array
     userData[0].posts.push(photoData[photoData.length - 1]._id);
