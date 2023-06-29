@@ -4,9 +4,9 @@ const UserModel = require("../model/userSchema");
 exports.postLike = async (req, res) => {
   try {
     const {
-      params: { username, photoId },
+      params: { photoId },
     } = req;
-    const userData = await UserModel.find({ username: username });
+    const userData = await UserModel.find({ username: req.token.username });
     const photoDataRaw = await PhotoModel.find({ _id: photoId });
 
     // if (photoDataRaw.likes.includes(userData[0]._id)) {

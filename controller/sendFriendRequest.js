@@ -4,10 +4,12 @@ const UserModel = require("../model/userSchema");
 exports.sendFriendRequest = async (req, res) => {
   try {
     const {
-      params: { username, reqUsername },
+      params: { reqUsername },
     } = req;
 
-    const friendRequesterData = await UserModel.find({ username: username });
+    const friendRequesterData = await UserModel.find({
+      username: req.token.username,
+    });
     const friendRequestedData = await UserModel.find({ username: reqUsername });
 
     //check if already friends by checking if there is friendRequestedId in the friends array of friendRequester
