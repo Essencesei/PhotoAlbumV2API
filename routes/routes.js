@@ -12,10 +12,10 @@ const { acceptFriendRequest } = require("../controller/acceptFriendRequest");
 const { getFriendsByUser } = require("../controller/getFriendsByUser");
 const { getAllUser } = require("../controller/getAllUser");
 const { postLike } = require("../controller/postLike");
-
-const multer = require("multer");
 const { login } = require("../controller/login");
 const { verifyJWT } = require("../middlewares/verifyJWT");
+
+const multer = require("multer");
 
 //Set storage
 
@@ -32,10 +32,10 @@ const upload = multer({ storage: storage });
 
 router
   .get("/ping", ping)
-  .get("/:username/post", getAllUserPost)
-  .get("/:username/:photoId/comment", getAllCommentByPost)
-  .get("/:username/friends", getFriendsByUser)
-  .get("/users", getAllUser);
+  .get("/post", verifyJWT, getAllUserPost)
+  .get("/comment/:photoId", verifyJWT, getAllCommentByPost)
+  .get("/friends", verifyJWT, getFriendsByUser)
+  .get("/users", verifyJWT, getAllUser);
 
 router
   .post(
@@ -44,14 +44,13 @@ router
       { name: "profilePic", maxCount: 1 },
       { name: "cover", maxCount: 1 },
     ]),
-
     registerNewUser
   )
   .post("/post", upload.single("image"), verifyJWT, post)
-  .post("/:username/:photoId/comment", comment)
-  .post("/:username/request/:reqUsername", sendFriendRequest)
-  .post("/:username/accept/:reqUsername", acceptFriendRequest)
-  .post("/:username/:photoId/like", postLike)
+  .post("/comment/:photoId", verifyJWT, comment)
+  .post("/request/:reqUsername", verifyJWT, sendFriendRequest)
+  .post("/accept/:reqUsername", verifyJWT, acceptFriendRequest)
+  .post("/like/:photoId", verifyJWT, postLike)
   .post("/login", login);
 
 module.exports = router;
