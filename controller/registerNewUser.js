@@ -47,9 +47,11 @@ exports.registerNewUser = async (req, res) => {
     //   )
     // );
 
+    const hash = await bcrypt.hash(password, 10);
+
     const doc = {
       username,
-      password,
+      password: hash,
       firstName,
       lastName,
       // Save the path itself to db
@@ -57,14 +59,10 @@ exports.registerNewUser = async (req, res) => {
       coverPath: cover[0].path,
     };
 
-    bcrypt.hash(password, 10, (err, hash) => {
-      doc.password = hash;
-    });
-
     await UserModel.create(doc);
 
     res.status(201).json({
-      message: "Account created successfuly",
+      message: "Registered successfuly",
       data: doc,
     });
   } catch (err) {
