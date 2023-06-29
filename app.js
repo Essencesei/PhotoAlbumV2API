@@ -5,8 +5,6 @@ const app = express();
 
 const router = require("./routes/routes");
 
-const compression = require("compression");
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "https://photo-album-v2.onrender.com", credentials: true }));

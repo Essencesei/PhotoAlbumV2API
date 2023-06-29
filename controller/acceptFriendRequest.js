@@ -3,11 +3,15 @@ const UserModel = require("../model/userSchema");
 exports.acceptFriendRequest = async (req, res) => {
   try {
     const {
-      params: { username, reqUsername },
+      params: { reqUsername },
     } = req;
 
-    const userFriendReqList = await UserModel.find({ username: username });
-    const friendRequesterData = await UserModel.find({ username: username });
+    const userFriendReqList = await UserModel.find({
+      username: req.token.username,
+    });
+    const friendRequesterData = await UserModel.find({
+      username: req.token.username,
+    });
     const friendRequestedData = await UserModel.find({ username: reqUsername });
 
     //check if the user current friendReqlist array actually have the requester id
@@ -18,7 +22,7 @@ exports.acceptFriendRequest = async (req, res) => {
 
     // add the Id of the accepted friend in the users friends array
     await UserModel.findOneAndUpdate(
-      { username: username },
+      { username: req.token.username },
       {
         $addToSet: { friends: friendRequestedData[0]._id },
       }
@@ -32,7 +36,7 @@ exports.acceptFriendRequest = async (req, res) => {
 
     // Delete the id in the friendsReq
     const update = await UserModel.findOneAndUpdate(
-      { username: username },
+      { username: req.token.username },
       { $pull: { friendsReq: friendRequestedData[0]._id } },
       { new: true }
     );

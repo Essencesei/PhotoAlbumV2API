@@ -6,14 +6,15 @@ const CommentModel = require("../model/commentSchema");
 
 exports.comment = async (req, res) => {
   //Deconstruct req and params object
+  console.log(req.params);
   try {
     const {
       body: { comment },
-      params: { username, photoId },
+      params: { photoId },
     } = req;
 
     // Store fetched data in variables
-    const userData = await UserModel.find({ username: username });
+    const userData = await UserModel.find({ username: req.token.username });
     const photoData = await PhotoModel.find({ _id: photoId });
 
     //create doc structure

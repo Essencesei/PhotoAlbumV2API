@@ -9,6 +9,8 @@ exports.registerNewUser = async (req, res) => {
       files: { profilePic, cover },
     } = req;
 
+    console.log(req.files.profilePic);
+
     // const imgProfilePic = fs.readFileSync(req.files.profilePic[0].path);
     // const imgProfileCover = fs.readFileSync(req.files.cover[0].path);
     // const encodeImgProfilePic = imgProfilePic.toString("base64");
@@ -55,25 +57,26 @@ exports.registerNewUser = async (req, res) => {
       firstName,
       lastName,
       // Save the path itself to db
-      profilePicPath: profilePic[0].path,
-      coverPath: cover[0].path,
+      profilePicPath: profilePic[0]?.path,
+      coverPath: cover[0]?.path,
     };
 
-    await UserModel.create(doc);
+    const docStatus = await UserModel.create(doc);
+
+    console.log(docStatus);
+
+    //  const removeImage = (filename) => {
+    //   filename.forEach((element) => {
+    //     fs.unlinkSync(req.files[element][0].path);
+    //   });
+    // };
+    // removeImage(["profilePic", "cover"]);
 
     res.status(201).json({
       message: "Registered successfuly",
       data: doc,
     });
   } catch (err) {
-    const removeImage = (filename) => {
-      filename.forEach((element) => {
-        fs.unlinkSync(req.files[element][0].path);
-      });
-    };
-
-    removeImage(["profilePic", "cover"]);
-
     res.status(400).json({
       message: err.message,
     });
