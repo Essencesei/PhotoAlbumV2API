@@ -11,13 +11,10 @@ exports.getAllUser = async (req, res) => {
       // function for transforming the image to buffer, using fs to determine the
       // file directory
       const bufGen = (field) => {
-        return new Buffer.from(fs.readFileSync(element[field]), "base64");
+        return fs.existsSync(element[field])
+          ? new Buffer.from(fs.readFileSync(element[field]), "base64")
+          : new Buffer.from(fs.readFileSync("asset\\brokenImg.png"), "base64");
       };
-
-      const buff = new Buffer.from(
-        fs.readFileSync(element.coverPath),
-        "base64"
-      );
 
       // populate the profilepic and cover field in userdata object
       element.profilePic = {
