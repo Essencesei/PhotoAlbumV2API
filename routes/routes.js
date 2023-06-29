@@ -14,6 +14,8 @@ const { getAllUser } = require("../controller/getAllUser");
 const { postLike } = require("../controller/postLike");
 
 const multer = require("multer");
+const { login } = require("../controller/login");
+const { verifyJWT } = require("../middlewares/verifyJWT");
 
 //Set storage
 
@@ -45,10 +47,11 @@ router
 
     registerNewUser
   )
-  .post("/:username/post", upload.single("image"), post)
+  .post("/post", upload.single("image"), verifyJWT, post)
   .post("/:username/:photoId/comment", comment)
   .post("/:username/request/:reqUsername", sendFriendRequest)
   .post("/:username/accept/:reqUsername", acceptFriendRequest)
-  .post("/:username/:photoId/like", postLike);
+  .post("/:username/:photoId/like", postLike)
+  .post("/login", login);
 
 module.exports = router;
