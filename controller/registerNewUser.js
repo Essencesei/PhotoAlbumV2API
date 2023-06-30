@@ -65,7 +65,7 @@ exports.registerNewUser = async (req, res) => {
 
     console.log(docStatus);
 
-    //  const removeImage = (filename) => {
+    // const removeImage = (filename) => {
     //   filename.forEach((element) => {
     //     fs.unlinkSync(req.files[element][0].path);
     //   });
