@@ -21,7 +21,7 @@ exports.login = async (req, res) => {
       process.env.SECRET_KEY
     );
 
-    res.cookie("token", token, { maxAge: 900000, httpOnly: true, secure: true, sameSite: 'none', domain: '.onrender.com'});
+    res.cookie("token", token, { maxAge: 900000, httpOnly: true, secure: true, sameSite: 'none', domain: 'photo-album-v2.onrender.com'});
 
     res.status(200).json({
       message: "Logged In",
