@@ -4,14 +4,11 @@
   "description": "API for PhotoAlbumV2",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "dev": "parcel server.js",
-    "build": "parcel build server.js --dist-dir dist"
+    "start": "nodemon index.js"
   },
   "author": "Dela Pena Sherwin, Donayre Mark, Dumlao Jonathan, Santos Jheyvie",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1408.0",
     "bcrypt": "^5.1.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -22,23 +19,6 @@
     "mongoose": "^7.3.1",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.22",
-    "paginate": "^0.2.0",
-    "parcel": "^2.9.3"
-  },
-  "devDependencies": {
-    "assert": "^2.0.0",
-    "browserify-zlib": "^0.2.0",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
-    "events": "^3.3.0",
-    "os-browserify": "^0.3.0",
-    "path-browserify": "^1.0.1",
-    "process": "^0.11.10",
-    "punycode": "^1.4.1",
-    "querystring-es3": "^0.2.1",
-    "stream-browserify": "^3.0.0",
-    "stream-http": "^3.2.0",
-    "url": "^0.11.1",
-    "util": "^0.12.5"
+    "paginate": "^0.2.0"
   }
 }
