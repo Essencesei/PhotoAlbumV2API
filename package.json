@@ -2,9 +2,9 @@
   "name": "photoalbumv2api",
   "version": "1.0.0",
   "description": "API for PhotoAlbumV2",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "author": "Dela Pena Sherwin, Donayre Mark, Dumlao Jonathan, Santos Jheyvie",
   "license": "ISC",
