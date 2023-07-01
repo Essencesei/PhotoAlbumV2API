@@ -20,9 +20,15 @@ exports.getAllUserPost = async (req, res) => {
     });
 
     data[0].posts.forEach((element) => {
+      // console.log(fs.existsSync(element.imgPath));
       element.image = {
         contentType: "multipart/form-data",
-        image: new Buffer.from(fs.readFileSync(element.imgPath), "base64"),
+        image: fs.existsSync(element.imgPath)
+          ? new Buffer.from(fs.readFileSync(element.imgPath), "base64")
+          : new Buffer.from(
+              fs.readFileSync("uploads\\brokenImg.png"),
+              "base64"
+            ),
       };
     });
 

@@ -9,7 +9,7 @@ exports.registerNewUser = async (req, res) => {
       files: { profilePic, cover },
     } = req;
 
-    console.log(req.files.profilePic);
+    // console.log(req.files.profilePic);
 
     // const imgProfilePic = fs.readFileSync(req.files.profilePic[0].path);
     // const imgProfileCover = fs.readFileSync(req.files.cover[0].path);
@@ -63,9 +63,9 @@ exports.registerNewUser = async (req, res) => {
 
     const docStatus = await UserModel.create(doc);
 
-    console.log(docStatus);
+    // console.log(docStatus);
 
-    //  const removeImage = (filename) => {
+    // const removeImage = (filename) => {
     //   filename.forEach((element) => {
     //     fs.unlinkSync(req.files[element][0].path);
     //   });

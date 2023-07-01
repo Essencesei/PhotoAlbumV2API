@@ -57,10 +57,12 @@ const UserSchema = new mongoose.Schema({
       ref: "PhotoModel",
     },
   ],
-  notifications: {
-    type: Array,
-    default: [],
-  },
+  notifications: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "NotificationModel",
+    },
+  ],
   theme: {
     type: Array,
     default: [],

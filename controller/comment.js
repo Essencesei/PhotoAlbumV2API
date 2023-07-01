@@ -6,7 +6,7 @@ const CommentModel = require("../model/commentSchema");
 
 exports.comment = async (req, res) => {
   //Deconstruct req and params object
-  console.log(req.params);
+  // console.log(req.params);
   try {
     const {
       body: { comment },

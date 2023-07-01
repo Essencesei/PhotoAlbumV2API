@@ -17,7 +17,7 @@ const { verifyJWT } = require("../middlewares/verifyJWT");
 
 const multer = require("multer");
 
-//Set storage
+// Set storage
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

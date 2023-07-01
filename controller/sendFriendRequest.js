@@ -1,3 +1,4 @@
+const NotificationModel = require("../model/notificationSchema");
 const UserModel = require("../model/userSchema");
 
 //Friend Request
@@ -17,10 +18,26 @@ exports.sendFriendRequest = async (req, res) => {
     if (friendRequesterData[0].friends.includes(friendRequestedData[0]._id))
       throw new Error("Already Friends");
 
+    const friendReqNotif = await NotificationModel.create({
+      description: `${req.token.username} sent you a friend request`,
+      to: friendRequestedData[0]._id,
+      from: friendRequesterData[0]._id,
+      notifType: "Friend Request",
+    });
+
+    // console.log("friendReqNotif ", friendReqNotif);
+
+    //  const notificationData = await NotificationModel.find({})
+
     // add the id of the friendrequester in the friendRequested friendsReq array
     const updated = await UserModel.findOneAndUpdate(
       { username: reqUsername },
-      { $addToSet: { friendsReq: friendRequesterData[0]._id } },
+      {
+        $addToSet: {
+          friendsReq: friendRequesterData[0]._id,
+          notifications: friendReqNotif._id,
+        },
+      },
       { new: true }
     );
 
