@@ -7,7 +7,7 @@ const router = require("./routes/routes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "https://localhost:3001", credentials: true }));
+app.use(cors({ origin: "https:/local/host:3000", credentials: true }));
 app.use(cookieParser());
 
 app.use("/test", router);

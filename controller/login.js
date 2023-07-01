@@ -8,7 +8,7 @@ exports.login = async (req, res) => {
       body: { username, password },
     } = req;
 
-    console.log(username);
+    // console.log(username);
 
     const userData = await UserModel.find({ username: username });
 

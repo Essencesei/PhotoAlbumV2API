@@ -1,4 +1,5 @@
 const UserModel = require("../model/userSchema");
+const NotificationModel = require("../model/notificationSchema");
 
 exports.acceptFriendRequest = async (req, res) => {
   try {
@@ -34,15 +35,50 @@ exports.acceptFriendRequest = async (req, res) => {
       }
     );
 
+    const matchingNotif = await NotificationModel.find({
+      to: friendRequesterData[0]._id,
+      from: friendRequestedData[0]._id,
+      notifType: "Friend Request",
+    });
+
     // Delete the id in the friendsReq
     const update = await UserModel.findOneAndUpdate(
       { username: req.token.username },
-      { $pull: { friendsReq: friendRequestedData[0]._id } },
+      {
+        $pull: {
+          friendsReq: friendRequestedData[0]._id,
+          notifications: matchingNotif[0]._id,
+        },
+      },
       { new: true }
     );
 
+    //Create Notification
+
+    const friendAcceptNotif = await NotificationModel.create({
+      description: `${req.token.username} accepted your friend request`,
+      to: friendRequestedData[0]._id,
+      from: friendRequesterData[0]._id,
+      notifType: "Friend Request",
+    });
+
+    // console.log(notifData);
+
+    const updateNotiftoSender = await UserModel.findOneAndUpdate(
+      { username: friendRequestedData[0].username },
+      {
+        $addToSet: {
+          notifications: friendAcceptNotif._id,
+        },
+      },
+      { new: true }
+    );
+
+    // console.log("update 2", update2);
+
     // throw error
-    if (!update) throw new Error("There is something wrong");
+    if (!update || !updateNotiftoSender)
+      throw new Error("There is something wrong");
 
     res.status(200).json({
       message: "Friend request accepted",
