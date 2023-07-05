@@ -57,3 +57,16 @@ exports.post = async (req, res) => {
     });
   }
 };
+
+exports.deletePost = async (req, res) => {
+  try {
+    await PhotoModel.findOneAndDelete({ _id: req.params.photoId });
+    res.status(201).json({
+      message: "Photo Deleted",
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: err.message,
+    });
+  }
+};
