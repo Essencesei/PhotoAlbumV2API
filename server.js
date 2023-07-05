@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const app = require("./app");
 require("dotenv").config({ path: `${__dirname}/.env` });
 
-const uri = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
+let uri = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
+if (process.env.NODE_ENV === "production") uri.replace("/?", "/?production");
 
 (async () => {
   try {
@@ -16,6 +17,8 @@ const uri = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
     console.log(err.message);
   }
 })();
+
+console.log(uri);
 
 const urlDomain =
   process.env.NODE_ENV === "production" ? "" : process.env.DOMAIN;

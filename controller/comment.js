@@ -1,10 +1,11 @@
 const UserModel = require("../model/userSchema");
 const PhotoModel = require("../model/photoSchema");
 const CommentModel = require("../model/commentSchema");
+const NotificationModel = require("../model/notificationSchema");
 
 // User comments and pushing of commentId to PhotoModel comments[]
 
-exports.comment = async (req, res) => {
+exports.comment = async (req, res, next) => {
   //Deconstruct req and params object
   // console.log(req.params);
   try {
@@ -38,6 +39,21 @@ exports.comment = async (req, res) => {
 
     //save changes of photo data
     await photoData[0].save();
+
+    //add notification
+
+    const commentNotif = await NotificationModel.create({
+      description: `${req.token.username} commented on your post.`,
+      to: photoData[0].uploaderId,
+      from: userData[0]._id,
+      notifType: "Comment",
+    });
+
+    await UserModel.findOneAndUpdate(
+      { _id: photoData[0].uploaderId },
+      { $push: { notifications: commentNotif._id } },
+      { new: true }
+    );
 
     res.status(201).json({
       message: "success",

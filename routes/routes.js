@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { ping } = require("../controller/ping");
 const { registerNewUser } = require("../controller/registerNewUser");
-const { post } = require("../controller/post");
+const { post, deletePost } = require("../controller/post");
 const { getAllUserPost } = require("../controller/getAllUserPost");
 const { comment } = require("../controller/comment");
 const { getAllCommentByPost } = require("../controller/getAllCommentByPost");
@@ -14,6 +14,9 @@ const { getAllUser } = require("../controller/getAllUser");
 const { postLike } = require("../controller/postLike");
 const { login } = require("../controller/login");
 const { verifyJWT } = require("../middlewares/verifyJWT");
+const {
+  getAllNotificationsByUser,
+} = require("../controller/getAllNotificationsByUser");
 
 const multer = require("multer");
 
@@ -35,7 +38,8 @@ router
   .get("/post", verifyJWT, getAllUserPost)
   .get("/comment/:photoId", verifyJWT, getAllCommentByPost)
   .get("/friends", verifyJWT, getFriendsByUser)
-  .get("/users", verifyJWT, getAllUser);
+  .get("/users", verifyJWT, getAllUser)
+  .get("/notifications", verifyJWT, getAllNotificationsByUser);
 
 router
   .post(
@@ -53,4 +57,5 @@ router
   .post("/like/:photoId", verifyJWT, postLike)
   .post("/login", login);
 
+router.delete("/post/:photoId", verifyJWT, deletePost);
 module.exports = router;

@@ -26,17 +26,19 @@ exports.login = async (req, res) => {
     res.cookie("token", token, {
       maxAge: 900000,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production" ? true : false,
+      secure: true,
       sameSite: "none",
     });
 
     res.status(200).json({
       message: "Logged In",
-      token: token,
+      loggedIn: true,
     });
   } catch (err) {
+    res.clearCookie("token");
     res.status(400).json({
       message: err.message,
+      loggedIn: false,
     });
   }
 };
