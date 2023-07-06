@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
     if (!valid) throw new Error("Incorrect Cred");
 
     const token = await jwt.sign(
-      { username: userData[0].username },
+      { username: userData[0].username, _id: userData[0]._id },
       process.env.SECRET_KEY
     );
 
