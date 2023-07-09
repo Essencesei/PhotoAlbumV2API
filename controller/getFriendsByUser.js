@@ -17,7 +17,7 @@ exports.getFriendsByUser = async (req, res) => {
         _id: element._id,
         username: element.username,
         firstName: element.firstName,
-        lastNamee: element.lastName,
+        lastName: element.lastName,
         image: {
           contentType: "multipart/form-data",
           image: fs.existsSync(element.profilePicPath)
