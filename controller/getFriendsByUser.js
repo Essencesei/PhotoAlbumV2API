@@ -12,6 +12,7 @@ exports.getFriendsByUser = async (req, res) => {
     });
 
     const modifiedFriendList = friendList[0].friends.map((element) => {
+      console.log(element);
       const data = {
         _id: element._id,
         username: element.username,
@@ -19,7 +20,7 @@ exports.getFriendsByUser = async (req, res) => {
         lastNamee: element.lastName,
         image: {
           contentType: "multipart/form-data",
-          image: fs.existsSync(element.imgPath)
+          image: fs.existsSync(element.profilePicPath)
             ? new Buffer.from(fs.readFileSync(element.profilePicPath), "base64")
             : new Buffer.from(
                 fs.readFileSync("uploads\\brokenImg.png"),

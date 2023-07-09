@@ -9,50 +9,13 @@ exports.registerNewUser = async (req, res) => {
       files: { profilePic, cover },
     } = req;
 
-    // console.log(req.files.profilePic);
-
-    // const imgProfilePic = fs.readFileSync(req.files.profilePic[0].path);
-    // const imgProfileCover = fs.readFileSync(req.files.cover[0].path);
-    // const encodeImgProfilePic = imgProfilePic.toString("base64");
-    // const encodeImgCover = imgProfileCover.toString("base64");
-
-    // const encodeImage = (fileName) => {
-    //   return fs.readFileSync(req.files[fileName][0].path).toString("base64");
-    // };
-
-    // const doc = {
-    //   username,
-    //   password,
-    //   firstName,
-    //   lastName,
-    //   profilePic: {
-    //     contentType: req.files.profilePic[0].mimetype,
-    //     image: zlib.deflateSync(
-    //       new Buffer.from(encodeImage("profilePic"), "base64")
-    //     ),
-    //   },
-    //   cover: {
-    //     contentType: req.files.cover[0].mimetype,
-    //     image: new Buffer.from(encodeImage("cover"), "base64"),
-    //   },
-    // };
-
-    // console.log("normal: ", new Buffer.from(imgProfilePic, "base64"));
-    // console.log(
-    //   "defalted: ",
-    //   zlib.deflateSync(new Buffer.from(imgProfilePic, "base64"))
-    // );
-    // console.log(
-    //   "inflated: ",
-    //   zlib.inflateSync(
-    //     zlib.deflateSync(new Buffer.from(imgProfilePic, "base64"))
-    //   )
-    // );
-
     const hash = await bcrypt.hash(password, 10);
 
+    const newUsername =
+      username.split("")[0] === "@" ? username : "@" + username;
+
     const doc = {
-      username,
+      username: newUsername,
       password: hash,
       firstName,
       lastName,
