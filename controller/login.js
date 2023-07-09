@@ -8,9 +8,10 @@ exports.login = async (req, res) => {
       body: { username, password },
     } = req;
 
-    // console.log(username);
+    const newUsername =
+      username.split("")[0] === "@" ? username : "@" + username;
 
-    const userData = await UserModel.find({ username: username });
+    const userData = await UserModel.find({ username: newUsername });
 
     if (userData.length === 0) throw new Error("User not found");
 
@@ -29,14 +30,6 @@ exports.login = async (req, res) => {
       secure: true,
       sameSite: "none",
     });
-
-    res.cookie(
-      "log",
-      { logged: true },
-      {
-        maxAge: 900000,
-      }
-    );
 
     res.status(200).json({
       message: "Logged In",
