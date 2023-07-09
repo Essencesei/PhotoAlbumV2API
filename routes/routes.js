@@ -17,9 +17,9 @@ const { verifyJWT } = require("../middlewares/verifyJWT");
 const {
   getAllNotificationsByUser,
 } = require("../controller/getAllNotificationsByUser");
+const { getUser } = require("../controller/getUser");
 
 const multer = require("multer");
-const { getUser } = require("../controller/getUser");
 
 // Set storage
 

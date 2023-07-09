@@ -1,4 +1,5 @@
 const UserModel = require("../model/userSchema");
+const fs = require("fs");
 
 exports.getFriendsByUser = async (req, res) => {
   try {
@@ -10,10 +11,30 @@ exports.getFriendsByUser = async (req, res) => {
       select: "-password",
     });
 
+    const modifiedFriendList = friendList[0].friends.map((element) => {
+      const data = {
+        _id: element._id,
+        username: element.username,
+        firstName: element.firstName,
+        lastNamee: element.lastName,
+        image: {
+          contentType: "multipart/form-data",
+          image: fs.existsSync(element.imgPath)
+            ? new Buffer.from(fs.readFileSync(element.profilePicPath), "base64")
+            : new Buffer.from(
+                fs.readFileSync("uploads\\brokenImg.png"),
+                "base64"
+              ),
+        },
+      };
+
+      return data;
+    });
+
     res.status(200).json({
       message: `${req.token.username} friends List`,
       length: friendList[0].friends.length,
-      data: [...friendList[0].friends],
+      data: modifiedFriendList,
     });
   } catch (err) {
     res.status(400).json({

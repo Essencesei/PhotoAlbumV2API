@@ -30,6 +30,14 @@ exports.login = async (req, res) => {
       sameSite: "none",
     });
 
+    res.cookie(
+      "log",
+      { logged: true },
+      {
+        maxAge: 900000,
+      }
+    );
+
     res.status(200).json({
       message: "Logged In",
       loggedIn: true,
