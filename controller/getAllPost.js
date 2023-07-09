@@ -17,7 +17,7 @@ exports.getAllPost = async (req, res) => {
 
     const newData = data.map((el) => {
       const data = {
-        id: el._id,
+        _id: el._id,
         name: el.name,
         captureDate: el.captureDate,
         description: el.description,
