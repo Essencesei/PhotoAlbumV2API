@@ -8,10 +8,13 @@ exports.sendFriendRequest = async (req, res) => {
       params: { reqUsername },
     } = req;
 
+    const newUsername =
+      reqUsername.split("")[0] === "@" ? reqUsername : "@" + reqUsername;
+
     const friendRequesterData = await UserModel.find({
       username: req.token.username,
     });
-    const friendRequestedData = await UserModel.find({ username: reqUsername });
+    const friendRequestedData = await UserModel.find({ username: newUsername });
 
     //check if already friends by checking if there is friendRequestedId in the friends array of friendRequester
 

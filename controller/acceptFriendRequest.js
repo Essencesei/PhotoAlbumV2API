@@ -7,13 +7,16 @@ exports.acceptFriendRequest = async (req, res) => {
       params: { reqUsername },
     } = req;
 
+    const newUsername =
+      reqUsername.split("")[0] === "@" ? reqUsername : "@" + reqUsername;
+
     const userFriendReqList = await UserModel.find({
       username: req.token.username,
     });
     const friendRequesterData = await UserModel.find({
       username: req.token.username,
     });
-    const friendRequestedData = await UserModel.find({ username: reqUsername });
+    const friendRequestedData = await UserModel.find({ username: newUsername });
 
     //check if the user current friendReqlist array actually have the requester id
     // here we can validate if there is a pending friend request
