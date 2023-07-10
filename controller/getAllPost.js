@@ -13,10 +13,12 @@ exports.getAllPost = async (req, res) => {
     const data = await PhotoModel.find()
       .limit(limit)
       .skip((page - 1) * limit)
+
       .sort({ captureDate: sort })
       .populate({ path: "uploaderId", select: "profilePicPath" });
 
     console.log(data);
+
 
     const newData = data.map((el) => {
       const data = {
@@ -26,6 +28,7 @@ exports.getAllPost = async (req, res) => {
         description: el.description,
         uploader: el.uploader,
         uploaderId: el.uploaderId,
+
         uploaderName: el.uploaderName,
         likes: el.likes,
         thumbnail: {
@@ -40,6 +43,7 @@ exports.getAllPost = async (req, res) => {
                 "base64"
               ),
         },
+
         comments: el.comments,
         privacy: el.privacy,
         __v: el.__v,

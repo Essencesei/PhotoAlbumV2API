@@ -21,7 +21,9 @@ const { getUser } = require("../controller/getUser");
 
 const multer = require("multer");
 const { getAllPost } = require("../controller/getAllPost");
+
 const { getPost } = require("../controller/getPost");
+
 
 // Set storage
 
@@ -46,6 +48,8 @@ router
   .get("/notifications", verifyJWT, getAllNotificationsByUser)
   .get("/posts", verifyJWT, getAllPost)
   .get("/post/:photoId", verifyJWT, getPost);
+
+
 
 router
   .post(
