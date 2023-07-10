@@ -11,7 +11,7 @@ const NotificationSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   to: {
     type: mongoose.Schema.Types.ObjectId,

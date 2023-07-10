@@ -8,11 +8,14 @@ const NotificationModel = require("../model/notificationSchema");
 exports.comment = async (req, res, next) => {
   //Deconstruct req and params object
   // console.log(req.params);
+
   try {
     const {
       body: { comment },
       params: { photoId },
     } = req;
+
+    console.log(comment);
 
     // Store fetched data in variables
     const userData = await UserModel.find({ username: req.token.username });
@@ -20,13 +23,17 @@ exports.comment = async (req, res, next) => {
 
     //create doc structure
     const doc = {
+      fullName: `${userData[0].firstName} ${userData[0].lastName}`,
       username: userData[0].username,
       comment,
       commentatorId: userData[0]._id,
       photoId: photoData[0]._id,
     };
 
+    console.log(doc);
+
     // create a collection with doc structure
+
     await CommentModel.create(doc);
 
     //store fetched data into variable

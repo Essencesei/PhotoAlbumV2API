@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
     );
 
     res.cookie("token", token, {
-      maxAge: 900000,
+      maxAge: 9900000,
       httpOnly: true,
       secure: true,
       sameSite: "none",

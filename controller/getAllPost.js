@@ -13,7 +13,10 @@ exports.getAllPost = async (req, res) => {
     const data = await PhotoModel.find()
       .limit(limit)
       .skip((page - 1) * limit)
-      .sort({ captureDate: sort });
+      .sort({ captureDate: sort })
+      .populate({ path: "uploaderId", select: "profilePicPath" });
+
+    console.log(data);
 
     const newData = data.map((el) => {
       const data = {
@@ -23,7 +26,20 @@ exports.getAllPost = async (req, res) => {
         description: el.description,
         uploader: el.uploader,
         uploaderId: el.uploaderId,
+        uploaderName: el.uploaderName,
         likes: el.likes,
+        thumbnail: {
+          contentType: "multipart/form-data",
+          image: fs.existsSync(el.uploaderId.profilePicPath)
+            ? new Buffer.from(
+                fs.readFileSync(el.uploaderId.profilePicPath),
+                "base64"
+              )
+            : new Buffer.from(
+                fs.readFileSync("uploads\\brokenImg.png"),
+                "base64"
+              ),
+        },
         comments: el.comments,
         privacy: el.privacy,
         __v: el.__v,

@@ -6,12 +6,12 @@ exports.getAllUserPost = async (req, res) => {
   try {
     // Deconstruct req
     const {
-      query: { page, limit },
+      query: { page, limit, id },
     } = req;
 
     // Store to variable
     const data = await UserModel.find({
-      username: req.token.username,
+      _id: id ? id : req.token._id,
     }).populate({
       path: "posts",
       limit: limit,

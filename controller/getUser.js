@@ -3,9 +3,13 @@ const fs = require("fs");
 
 exports.getUser = async (req, res) => {
   try {
-    const userData = await UserModel.find({ _id: req.token._id }).select(
-      "-password"
-    );
+    const {
+      query: { id },
+    } = req;
+
+    const userData = await UserModel.find({
+      _id: id ? id : req.token._id,
+    }).select("-password");
     userData.forEach((element) => {
       // function for transforming the image to buffer, using fs to determine the
       // file directory
