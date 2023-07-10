@@ -22,6 +22,9 @@ const { getUser } = require("../controller/getUser");
 const multer = require("multer");
 const { getAllPost } = require("../controller/getAllPost");
 
+const { getPost } = require("../controller/getPost");
+
+
 // Set storage
 
 const storage = multer.diskStorage({
@@ -43,7 +46,10 @@ router
   .get("/users", verifyJWT, getAllUser)
   .get("/user", verifyJWT, getUser)
   .get("/notifications", verifyJWT, getAllNotificationsByUser)
-  .get("/posts", verifyJWT, getAllPost);
+  .get("/posts", verifyJWT, getAllPost)
+  .get("/post/:photoId", verifyJWT, getPost);
+
+
 
 router
   .post(

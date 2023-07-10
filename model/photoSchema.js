@@ -14,6 +14,7 @@ const PhotoSchema = new mongoose.Schema({
   },
   captureDate: {
     type: Date,
+    default: Date.now,
   },
   description: {
     type: String,
@@ -21,6 +22,9 @@ const PhotoSchema = new mongoose.Schema({
   uploader: {
     type: String,
     required: true,
+  },
+  uploaderName: {
+    type: String,
   },
   uploaderId: {
     type: mongoose.Schema.Types.ObjectId,

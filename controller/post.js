@@ -17,6 +17,8 @@ exports.post = async (req, res) => {
       file: { path },
     } = req;
 
+    console.log("file: ", path);
+
     // fetch userModel data and place in a variable
     const userData = await UserModel.find({ username: req.token.username });
 
@@ -28,6 +30,7 @@ exports.post = async (req, res) => {
       description,
       uploader: userData[0].username,
       uploaderId: userData[0]._id,
+      uploaderName: `${userData[0].firstName} ${userData[0].lastName}`,
       likes,
       privacy,
     };

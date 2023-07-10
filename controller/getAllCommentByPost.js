@@ -5,11 +5,15 @@ exports.getAllCommentByPost = async (req, res) => {
   try {
     const {
       params: { username, photoId },
+      query: { sort },
     } = req;
 
-    const photoData = await PhotoModel.find({ _id: photoId }).populate(
-      "comments"
-    );
+    const photoData = await PhotoModel.find({ _id: photoId }).populate({
+      path: "comments",
+      options: {
+        sort: { date: sort },
+      },
+    });
 
     res.status(201).json({
       message: "success",
