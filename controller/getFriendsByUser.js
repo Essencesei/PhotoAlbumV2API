@@ -22,10 +22,7 @@ exports.getFriendsByUser = async (req, res) => {
           contentType: "multipart/form-data",
           image: fs.existsSync(element.profilePicPath)
             ? new Buffer.from(fs.readFileSync(element.profilePicPath), "base64")
-            : new Buffer.from(
-                fs.readFileSync("uploads\\brokenImg.png"),
-                "base64"
-              ),
+            : new Buffer.from(fs.readFileSync("uploads\\brokenImg"), "base64"),
         },
       };
 

@@ -19,7 +19,6 @@ exports.getAllPost = async (req, res) => {
 
     console.log(data);
 
-
     const newData = data.map((el) => {
       const data = {
         _id: el._id,
@@ -38,10 +37,7 @@ exports.getAllPost = async (req, res) => {
                 fs.readFileSync(el.uploaderId.profilePicPath),
                 "base64"
               )
-            : new Buffer.from(
-                fs.readFileSync("uploads\\brokenImg.png"),
-                "base64"
-              ),
+            : new Buffer.from(fs.readFileSync("uploads\\brokenImg"), "base64"),
         },
 
         comments: el.comments,
@@ -51,10 +47,7 @@ exports.getAllPost = async (req, res) => {
           contentType: "multipart/form-data",
           image: fs.existsSync(el.imgPath)
             ? new Buffer.from(fs.readFileSync(el.imgPath), "base64")
-            : new Buffer.from(
-                fs.readFileSync("uploads\\brokenImg.png"),
-                "base64"
-              ),
+            : new Buffer.from(fs.readFileSync("uploads\\brokenImg"), "base64"),
         },
       };
 

@@ -28,10 +28,7 @@ exports.getPost = async (req, res) => {
               fs.readFileSync(data.uploaderId.profilePicPath),
               "base64"
             )
-          : new Buffer.from(
-              fs.readFileSync("uploads\\brokenImg.png"),
-              "base64"
-            ),
+          : new Buffer.from(fs.readFileSync("uploads\\brokenImg"), "base64"),
       },
       comments: data.comments,
       privacy: data.privacy,
@@ -40,10 +37,7 @@ exports.getPost = async (req, res) => {
         contentType: "multipart/form-data.",
         image: fs.existsSync(data.imgPath)
           ? new Buffer.from(fs.readFileSync(data.imgPath), "base64")
-          : new Buffer.from(
-              fs.readFileSync("uploads\\brokenImg.png"),
-              "base64"
-            ),
+          : new Buffer.from(fs.readFileSync("uploads\\brokenImg"), "base64"),
       },
     };
 
