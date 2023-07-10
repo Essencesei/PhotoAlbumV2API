@@ -29,6 +29,7 @@ exports.login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
+      domain = "onrender.com"
     });
 
     res.status(200).json({
