@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const app = express();
+const dotenv = require("dotenv").config({ path: "./.env" });
 
 const router = require("./routes/routes");
 
@@ -16,6 +17,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(cookieParser());
 
 app.use("/test", router);
