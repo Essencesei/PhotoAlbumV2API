@@ -17,8 +17,6 @@ exports.getAllPost = async (req, res) => {
       .sort({ captureDate: sort })
       .populate({ path: "uploaderId", select: "profilePicPath" });
 
-    console.log(data);
-
     const newData = data.map((el) => {
       const data = {
         _id: el._id,

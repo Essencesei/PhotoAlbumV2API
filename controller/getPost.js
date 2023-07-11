@@ -6,7 +6,6 @@ exports.getPost = async (req, res) => {
       params: { photoId },
     } = req;
 
-    console.log(photoId);
     const data = await PhotoModel.findOne({ _id: photoId }).populate({
       path: "uploaderId",
       select: "profilePicPath",

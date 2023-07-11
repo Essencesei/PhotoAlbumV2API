@@ -7,8 +7,6 @@ exports.getUser = async (req, res) => {
       query: { id },
     } = req;
 
-    console.log("getUser: LINE 10: ",req.token.username)
-
     const userData = await UserModel.find({
       _id: id ? id : req.token._id,
     }).select("-password");
