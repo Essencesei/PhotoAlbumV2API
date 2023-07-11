@@ -13,10 +13,7 @@ exports.getAllUser = async (req, res) => {
       const bufGen = (field) => {
         return fs.existsSync(element[field])
           ? new Buffer.from(fs.readFileSync(element[field]), "base64")
-          : new Buffer.from(
-              fs.readFileSync("uploads\\brokenImg.png"),
-              "base64"
-            );
+          : new Buffer.from(fs.readFileSync("uploads\\brokenImg"), "base64");
       };
 
       // populate the profilepic and cover field in userdata object

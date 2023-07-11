@@ -14,6 +14,10 @@ exports.registerNewUser = async (req, res) => {
     const newUsername =
       username.split("")[0] === "@" ? username : "@" + username;
 
+    const existing = await UserModel.find({ username: newUsername });
+
+    if (existing.length > 0) throw new Error("Username Already Exist");
+
     const doc = {
       username: newUsername,
       password: hash,

@@ -15,8 +15,6 @@ exports.comment = async (req, res, next) => {
       params: { photoId },
     } = req;
 
-    console.log(comment);
-
     // Store fetched data in variables
     const userData = await UserModel.find({ username: req.token.username });
     const photoData = await PhotoModel.find({ _id: photoId });
@@ -29,8 +27,6 @@ exports.comment = async (req, res, next) => {
       commentatorId: userData[0]._id,
       photoId: photoData[0]._id,
     };
-
-    console.log(doc);
 
     // create a collection with doc structure
 
