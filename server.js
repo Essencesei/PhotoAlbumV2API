@@ -18,8 +18,6 @@ if (process.env.NODE_ENV === "production") uri.replace("/?", "/?production");
   }
 })();
 
-console.log(uri);
-
 const urlDomain =
   process.env.NODE_ENV === "production" ? "" : process.env.DOMAIN;
 

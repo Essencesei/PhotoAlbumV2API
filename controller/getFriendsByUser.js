@@ -12,7 +12,6 @@ exports.getFriendsByUser = async (req, res) => {
     });
 
     const modifiedFriendList = friendList[0].friends.map((element) => {
-      console.log(element);
       const data = {
         _id: element._id,
         username: element.username,
