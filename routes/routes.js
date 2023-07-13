@@ -23,10 +23,20 @@ const multer = require("multer");
 const { getAllPost } = require("../controller/getAllPost");
 
 const { getPost } = require("../controller/getPost");
+const { searchUser } = require("../controller/searchUser");
 
 // Set storage
 
-const upload = multer({ dest: "uploads/" });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+
+const upload = multer({ storage: storage });
 
 router
   .get("/ping", ping)
@@ -37,7 +47,8 @@ router
   .get("/user", verifyJWT, getUser)
   .get("/notifications", verifyJWT, getAllNotificationsByUser)
   .get("/posts", verifyJWT, getAllPost)
-  .get("/post/:photoId", verifyJWT, getPost);
+  .get("/post/:photoId", verifyJWT, getPost)
+  .get("/search", verifyJWT, searchUser);
 
 router
   .post(
