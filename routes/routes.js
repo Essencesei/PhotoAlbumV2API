@@ -47,8 +47,7 @@ router
   .get("/user", verifyJWT, getUser)
   .get("/notifications", verifyJWT, getAllNotificationsByUser)
   .get("/posts", verifyJWT, getAllPost)
-  .get("/post/:photoId", verifyJWT, getPost)
-  .get("/search", verifyJWT, searchUser);
+  .get("/post/:photoId", verifyJWT, getPost);
 
 router
   .post(
@@ -64,7 +63,8 @@ router
   .post("/request/:reqUsername", verifyJWT, sendFriendRequest)
   .post("/accept/:reqUsername", verifyJWT, acceptFriendRequest)
   .post("/like/:photoId", verifyJWT, postLike)
-  .post("/login", login);
+  .post("/login", login)
+  .post("/search", verifyJWT, searchUser);
 
 router.delete("/post/:photoId", verifyJWT, deletePost);
 module.exports = router;

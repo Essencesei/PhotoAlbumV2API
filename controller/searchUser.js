@@ -7,6 +7,8 @@ exports.searchUser = async (req, res) => {
       query: { query },
     } = req;
 
+    if (query === "") throw new Error("Please include atleast a keyword");
+
     const regex = new RegExp(query, "i");
 
     const userData = await UserModel.find({
